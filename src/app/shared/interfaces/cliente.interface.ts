@@ -1,3 +1,4 @@
+import { IProtocolResponse } from './protocol.interface';
 import { IResponsavel } from './responsavel.interface';
 
 export interface ICliente {
@@ -8,20 +9,23 @@ export interface ICliente {
   cpf: string;
   telephone: string;
   email: string;
-  education_level?: string;
-  medical_informations?: string;
-  medicines_in_use?: string;
-  processing_information?: string;
+  educationLevel?: string;
+  medicalInformations?: string;
+  medicinesInUse?: string;
+  processingInformation?: string;
   address: Address;
   responsible?: IResponsavel[];
-  created_at?: string;
-  updated_at?: string;
+  createdAt?: string;
+  updatedAt?: string
+  createdBy?: string;
+  updatedBy?: string;
+  protocols?: IProtocolResponse[];
 }
 
-export interface Address{
+export interface Address {
   cep: string;
   street: string;
-  address_number: number;
+  addressNumber: number;
   complement?: string;
   neighborhood: string;
   city: string;

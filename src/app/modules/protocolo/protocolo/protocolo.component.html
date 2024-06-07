@@ -31,13 +31,13 @@
       <ng-container matColumnDef="dataAplicacao">
         <th mat-header-cell *matHeaderCellDef>Data da aplicação</th>
         <td mat-cell *matCellDef="let element; let i = index">
-          {{ element.dataAplicacao | date : "dd/MM/yyyy HH:mm" }}
+          {{ element.createdAt | date : "dd/MM/yyyy HH:mm" }}
         </td>
       </ng-container>
       <ng-container matColumnDef="percentual">
         <th mat-header-cell *matHeaderCellDef>Percentual de sucesso</th>
         <td mat-cell *matCellDef="let element; let i = index">
-          {{ element.parcialDeSucesso }}%
+          {{ element.positivePercentage }}%
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

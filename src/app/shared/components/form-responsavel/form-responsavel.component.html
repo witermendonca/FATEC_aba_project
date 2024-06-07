@@ -45,10 +45,10 @@
     </div>
     <div class="row mt-4">
         <div class="col-6">
-            <label for="grauParentesco" [ngClass]="form.get('degree_of_kinship')?.invalid && form.get('degree_of_kinship')?.touched ? 'text-color-error' : ''">Grau de Parentesco</label>
+            <label for="grauParentesco" [ngClass]="form.get('degreeOfKinship')?.invalid && form.get('degreeOfKinship')?.touched ? 'text-color-error' : ''">Grau de Parentesco</label>
             <mat-form-field appearance="outline" class="w-100">
-                <input type="text" formControlName="degree_of_kinship" id="grauParentesco" matInput placeholder="Grau de parentesco">
-                <mat-error *ngIf="form.get('degree_of_kinship')?.invalid">
+                <input type="text" formControlName="degreeOfKinship" id="grauParentesco" matInput placeholder="Grau de parentesco">
+                <mat-error *ngIf="form.get('degreeOfKinship')?.invalid">
                     <span>Grau de parentesco do responsável é obrigatório</span>
                 </mat-error>
             </mat-form-field>

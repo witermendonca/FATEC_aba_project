@@ -1,31 +1,26 @@
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { IProtocol, IProtocolResponse } from '../../interfaces';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProtocoloService {
-  public localStorage: any;
+  private readonly urlApi = environment.url;
 
-  constructor() { 
-    this.localStorage = window.localStorage;
+  constructor(private http: HttpClient) { }
+  
+  listProtocolosByClient(id: number): Observable<IProtocolResponse[]> {
+    return this.http.get<IProtocolResponse[]>(`${this.urlApi}protocol/client/${id}`);
   }
 
-  getProtocolos(idCliente: number) {
-    const protocols: any = []
-    JSON.parse(this.localStorage.getItem('protocolos'))?.forEach((element: any) => {
-      if(element.idCliente === idCliente) protocols.push(element);
-    });
-    return protocols
+  saveProtocolo(protocol: IProtocol): Observable<HttpResponse<void>> {
+    return this.http.post<void>(`${this.urlApi}protocol`, protocol, { observe: 'response' });
   }
 
-  saveProtocolo(protocol: any) {
-    const protocols = JSON.parse(this.localStorage.getItem('protocolos')) || [];
-    protocols.push(protocol);
-    this.localStorage.setItem('protocolos', JSON.stringify(protocols));
-  }
-
-  getProtocoloPorId(id: string, idCliente: number) {
-    const protocols = JSON.parse(this.localStorage.getItem('protocolos'));
-    return protocols.find((c: any) => c.id === id)
+  getProtocoloPorId(id: number): Observable<IProtocolResponse> {
+    return this.http.get<IProtocolResponse>(`${this.urlApi}protocol/${id}`);
   }
 }

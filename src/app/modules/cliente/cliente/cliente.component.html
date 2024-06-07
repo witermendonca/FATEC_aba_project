@@ -43,20 +43,20 @@
                     </div>
                 </div>
                 <div class="row min-w-50">
-                    <div class="col-6" *ngIf="cliente?.education_level">
+                    <div class="col-6" *ngIf="cliente?.educationLevel">
                         <h5 class="me-1">Grau de Escolaridade:</h5>
-                        <p>{{cliente?.education_level}}</p>
+                        <p>{{cliente?.educationLevel}}</p>
                     </div>
-                    <div class="col-6" *ngIf="cliente?.medicines_in_use">
+                    <div class="col-6" *ngIf="cliente?.medicinesInUse">
                         <h5 class="me-1">Medicamentos:</h5>
-                        <p>{{cliente?.medicines_in_use}}</p>
+                        <p>{{cliente?.medicinesInUse}}</p>
                     </div>
                 </div>
             </div>
-            <div class="row" *ngIf="cliente?.processing_information">
+            <div class="row" *ngIf="cliente?.processingInformation">
                 <div class="col-12">
                     <h5 class="me-1">Dados do Tratamento:</h5>
-                    <p>{{cliente?.processing_information}}</p>
+                    <p>{{cliente?.processingInformation}}</p>
                 </div>
             </div>
 
@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-6">
                         <h5>Número:</h5>
-                        <p>{{cliente?.address?.address_number}}</p>
+                        <p>{{cliente?.address?.addressNumber}}</p>
                     </div>
                 </div>
                 <div class="row min-w-50">

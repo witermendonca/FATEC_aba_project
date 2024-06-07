@@ -40,7 +40,8 @@ export class EditResponsavelClientComponent {
 
   EditResponsavel(event: IResponsavel): void {
     if(this.idResponsavel === '0') {
-      this.service.saveResponsible(event, parseInt(this.idCliente)).subscribe({
+      event.idClient = parseInt(this.idCliente);
+      this.service.saveResponsible(event).subscribe({
         next: () => {
           this.router.navigate(['cliente', this.idCliente]);
         }, 

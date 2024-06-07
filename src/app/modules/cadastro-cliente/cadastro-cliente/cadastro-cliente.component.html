@@ -83,18 +83,18 @@
             <div class="row mt-4">
                 <div class="col-6">
                     <label for="medicamentosEmUsoCliente"
-                        [ngClass]="formCadastro.get('medicines_in_use')?.invalid && formCadastro.get('medicines_in_use')?.touched ? 'text-color-error' : ''">Medicamentos</label>
+                        [ngClass]="formCadastro.get('medicinesInUse')?.invalid && formCadastro.get('medicinesInUse')?.touched ? 'text-color-error' : ''">Medicamentos</label>
                     <mat-form-field appearance="outline" class="w-100">
-                        <textarea formControlName="medicines_in_use" rows="1" matInput
+                        <textarea formControlName="medicinesInUse" rows="1" matInput
                             placeholder="Medicamentos em uso do cliente" id="medicamentosEmUsoCliente"></textarea>
                     </mat-form-field>
                 </div>
                 <div class="col-6">
                     <label for="grauEscolaridadeCliente"
-                        [ngClass]="formCadastro.get('education_level')?.invalid && formCadastro.get('education_level')?.touched ? 'text-color-error' : ''">Grau
+                        [ngClass]="formCadastro.get('educationLevel')?.invalid && formCadastro.get('educationLevel')?.touched ? 'text-color-error' : ''">Grau
                         de Escolaridade</label>
                     <mat-form-field appearance="outline" class="w-100">
-                        <input type="text" formControlName="education_level" id="grauEscolaridadeCliente" matInput
+                        <input type="text" formControlName="educationLevel" id="grauEscolaridadeCliente" matInput
                             placeholder="Grau de Escolaridade do cliente">
                     </mat-form-field>
                 </div>
@@ -102,10 +102,10 @@
             <div class="row mt-4">
                 <div class="col-12">
                     <label for="dadosTratamentoCliente"
-                        [ngClass]="formCadastro.get('processing_information')?.invalid && formCadastro.get('processing_information')?.touched ? 'text-color-error' : ''">Dados do
+                        [ngClass]="formCadastro.get('processingInformation')?.invalid && formCadastro.get('processingInformation')?.touched ? 'text-color-error' : ''">Dados do
                         Tratamento</label>
                     <mat-form-field appearance="outline" class="w-100">
-                        <textarea formControlName="processing_information" rows="10" matInput
+                        <textarea formControlName="processingInformation" rows="10" matInput
                             placeholder="Dados Tratamento do cliente" id="dadosTratamentoCliente"></textarea>
                     </mat-form-field>
                 </div>
@@ -136,11 +136,11 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
-                        <label for="numeroCliente" [ngClass]="formCadastro.get('address')?.get('address_number')?.invalid && formCadastro.get('address')?.get('address_number')?.touched ? 'text-color-error' : ''">Número</label>
+                        <label for="numeroCliente" [ngClass]="formCadastro.get('address')?.get('addressNumber')?.invalid && formCadastro.get('address')?.get('addressNumber')?.touched ? 'text-color-error' : ''">Número</label>
                         <mat-form-field appearance="outline" class="w-100">
-                            <input type="number" formControlName="address_number" matInput placeholder="Número endereço do cliente"
+                            <input type="number" formControlName="addressNumber" matInput placeholder="Número endereço do cliente"
                                 id="numeroCliente">
-                            <mat-error *ngIf="formCadastro.get('address')?.get('address_number')?.invalid">
+                            <mat-error *ngIf="formCadastro.get('address')?.get('addressNumber')?.invalid">
                                 <span>Número endereço do cliente é obrigatório</span>
                             </mat-error>
                         </mat-form-field>

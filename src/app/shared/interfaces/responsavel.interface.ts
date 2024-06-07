@@ -3,9 +3,9 @@ export interface IResponsavel {
   name: string;
   cpf: string;
   email: string;
-  degree_of_kinship: string;
+  degreeOfKinship: string;
   telephone: string;
-  client_id?: number;
-  created_at?: string;
-  updated_at?: string;
+  idClient?: number;
+  createdAt?: string;
+  updatedAt?: string;
 }

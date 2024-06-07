@@ -61,8 +61,8 @@ export class FormResponsavelComponent implements OnInit {
         this._responsavel?.email || null,
         [Validators.required, Validators.email],
       ],
-      degree_of_kinship: [
-        this._responsavel?.degree_of_kinship || null,
+      degreeOfKinship: [
+        this._responsavel?.degreeOfKinship || null,
         [Validators.required],
       ],
       telephone: [

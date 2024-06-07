@@ -12,8 +12,8 @@ export class ResponsavelService {
 
   constructor(private http: HttpClient) { }
 
-  saveResponsible(responsible: IResponsavel, idClient: number): Observable<IResponsavel> {
-    return this.http.post<IResponsavel>(`${this.urlApi}responsible/${idClient}`, responsible);
+  saveResponsible(responsible: IResponsavel): Observable<IResponsavel> {
+    return this.http.post<IResponsavel>(`${this.urlApi}responsible`, responsible);
   }
 
   getResponsibleByClient(id: number): Observable<IResponsavel[]> {

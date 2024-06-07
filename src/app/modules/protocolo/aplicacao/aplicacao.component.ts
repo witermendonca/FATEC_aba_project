@@ -24,7 +24,7 @@ export class AplicacaoComponent implements OnInit {
     private service: ProtocoloService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private aplicacaoService: AplicacaoService,
+    private applicationService: AplicacaoService,
   ) {}
 
   ngOnInit(): void {
@@ -43,12 +43,16 @@ export class AplicacaoComponent implements OnInit {
   }
 
   getProtocolo(id: any): void {
-    this.protocolo = this.service.getProtocoloPorId(id, this.idCliente);
+    this.protocolo = this.service.getProtocoloPorId(id).subscribe({
+      next: (response) => this.protocolo = response,
+      error: (err) => console.error(err)
+    });
   }
 
   proximaTentativa(): void {
     if (this.tentativaAtual < this.maxiTentativas) {
       const tentativa = this.form.getRawValue();
+      tentativa.attemptNumber = this.tentativaAtual;
       this.resultados.push(tentativa);
       this.tentativaAtual++;
       this.form.reset();
@@ -67,27 +71,33 @@ export class AplicacaoComponent implements OnInit {
 
   finalizar() {
     const ultimaTentativa = this.form.getRawValue();
+    ultimaTentativa.attemptNumber = this.maxiTentativas;
     this.resultados.push(ultimaTentativa);
-    const successfulAttempts = this.resultados.filter(
-      (resultado: any) => resultado.result === 'Sucesso'
-    ).length;
+    const successfulAttempts = this.resultados.filter((resultado: any) => resultado.result).length;
     const por = (successfulAttempts / this.resultados.length) * 100 || 0;
-    const aplicacao = {
-      id: uuidv4(),
-      idProtocolo: this.protocoloId,
-      idCliente: this.idCliente,
-      resultados: this.resultados,
-      dataAplicacao: new Date(),
-      parcialDeSucesso: por,
+    const application = {
+      success: successfulAttempts,
+      failure: this.maxiTentativas - successfulAttempts,
+      positivePercentage: por,
+      aborted: null,
+      reasonAbortion: null,
+      createdBy: "Witer Mendonça",
+	    protocolId: this.protocoloId,
+      attempts: this.resultados
     };
-    this.aplicacaoService.saveAplicacao(aplicacao);
-    console.log('Resultados salvos no localStorage.', aplicacao);
-    this.router.navigate(['/protocolo'], {
-        queryParams: {
-          cliente: this.idCliente,
-          protocolo: this.protocoloId,
-        },
-      }
-    );
+    this.applicationService.saveApplication(application).subscribe({
+      next: (resp) => {
+        if(resp.status === 201) {
+          this.router.navigate(['/protocolo'], {
+            queryParams: {
+              cliente: this.idCliente,
+              protocolo: this.protocoloId,
+            },
+          }
+        );
+        }
+      },
+      error: (err) => console.error(err)
+    });
   }
 }

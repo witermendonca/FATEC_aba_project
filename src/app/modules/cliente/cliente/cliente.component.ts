@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ResponsavelService } from './../../../shared/services/responsavel/responsavel.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ICliente, IResponsavel } from 'src/app/shared/interfaces';
+import { ICliente, IProtocolResponse, IResponsavel } from 'src/app/shared/interfaces';
 import { ClienteService } from 'src/app/shared/services';
 import { v4 as uuidv4 } from 'uuid';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cliente',
@@ -16,7 +17,9 @@ export class ClienteComponent implements OnInit {
   public cliente: ICliente | null = null;
   public idClient: number = 0;
   public formProtocolo!: FormGroup;
-  public protocolos: any = [];
+  public protocolos: IProtocolResponse[] = [];
+
+  private subscription = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
@@ -30,14 +33,18 @@ export class ClienteComponent implements OnInit {
     this.idClient = parseInt(this.route.snapshot.paramMap.get('id') || '0');
     this.getClient(this.idClient);
     this.createForm();
-    this.getProtocolos();
   }
 
   getClient(id: number): void {
-    this.clienteService.getClientById(id).subscribe({
-      next: (response) => this.cliente = response,
-      error: (err) => console.error(err)
-    })
+    this.subscription.add(
+      this.clienteService.getClientById(id).subscribe({
+        next: (response) => {
+          this.cliente = response;
+          this.protocolos = response.protocols || [];
+        },
+        error: (err) => console.error(err)
+      })
+    );
   }
 
   acessarResponsavel(event?: IResponsavel): void {
@@ -71,18 +78,30 @@ export class ClienteComponent implements OnInit {
   }
 
   getProtocolos(): void {
-    this.protocolos = this.protocoloService.getProtocolos(this.idClient);
+    this.subscription.add(
+      this.protocoloService.listProtocolosByClient(this.idClient).subscribe({
+        next: (resp) => {
+          this.protocolos = resp;
+        }
+      })
+    );
   }
 
   onCadastrar(): void {
     if(this.formProtocolo.invalid) return;
-
-    const procolo = this.formProtocolo.getRawValue();
-    procolo.id = uuidv4();
-    procolo.status = 1;
-    procolo.idCliente = this.idClient;
-    this.protocoloService.saveProtocolo(procolo);
-    this.getProtocolos();
+    const protocol = this.formProtocolo.getRawValue();
+    protocol.createdBy = 'Witer Xavier Mendonca'
+    protocol.idClient = this.idClient;
+    this.subscription.add(
+      this.protocoloService.saveProtocolo(protocol).subscribe({
+        next: (resp) => {
+          if(resp.status === 201) {
+            this.getProtocolos();
+          }
+        },
+        error: (err) => console.error(err)
+      })
+    );
   }
 
   onCancelar(): void {

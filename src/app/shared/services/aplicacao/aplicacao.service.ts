@@ -1,4 +1,7 @@
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -6,8 +9,9 @@ import { Injectable } from '@angular/core';
 export class AplicacaoService {
 
   public localStorage: any;
+  private readonly urlApi = environment.url;
 
-  constructor() { 
+  constructor(private http: HttpClient) { 
     this.localStorage = window.localStorage;
   }
 
@@ -22,9 +26,7 @@ export class AplicacaoService {
     return aplicacoes;
   }
 
-  saveAplicacao(aplicacao: any) {
-    const aplicacoes = JSON.parse(this.localStorage.getItem('aplicacoes')) || [];
-    aplicacoes.push(aplicacao);
-    this.localStorage.setItem('aplicacoes', JSON.stringify(aplicacoes));
+  saveApplication(application: any): Observable<HttpResponse<void>> {
+    return this.http.post<void>(`${this.urlApi}application`, application, { observe: 'response' });
   }
 }
