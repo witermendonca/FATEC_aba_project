@@ -3,6 +3,8 @@ version: '3'
 services:
   aba:
     image: aba
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 8081:80

@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
     debounceTime(300),
     map((res) => {
       this.listaCliente = this.listaClienteAux.filter((cliente) =>
-        cliente.name.toLowerCase().includes(res)
+        cliente.name.toLowerCase().includes(res.toLowerCase())
       );
     })
   );

@@ -79,7 +79,7 @@ export class AplicacaoComponent implements OnInit {
       success: successfulAttempts,
       failure: this.maxiTentativas - successfulAttempts,
       positivePercentage: por,
-      aborted: null,
+      aborted: false,
       reasonAbortion: null,
       createdBy: "Witer Mendonça",
 	    protocolId: this.protocoloId,
