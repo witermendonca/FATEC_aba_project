@@ -1,23 +1,25 @@
+import { Subscription } from 'rxjs';
 import { AplicacaoService } from './../../../shared/services/aplicacao/aplicacao.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IProtocolResponse } from 'src/app/shared/interfaces';
 import { ProtocoloService } from 'src/app/shared/services';
-import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-aplicacao',
   templateUrl: './aplicacao.component.html',
   styleUrls: ['./aplicacao.component.scss'],
 })
-export class AplicacaoComponent implements OnInit {
+export class AplicacaoComponent implements OnInit, OnDestroy {
   public protocoloId: any;
-  public idCliente: number = 0;
-  public protocolo: any;
+  public protocolo?: IProtocolResponse;
   public tentativaAtual: number = 1;
   public maxiTentativas: number = 10;
   public form!: FormGroup;
-  public resultados: any = [];
+  public resultados: any[] = [];
+
+  private subscription = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
@@ -26,12 +28,15 @@ export class AplicacaoComponent implements OnInit {
     private router: Router,
     private applicationService: AplicacaoService,
   ) {}
-
+ 
   ngOnInit(): void {
     this.createForm();
     this.protocoloId = this.route.snapshot.queryParams['protocolo'] || '0';
-    this.idCliente = parseInt(this.route.snapshot.queryParams['cliente'] || '0');
     this.getProtocolo(this.protocoloId);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   createForm(): void {
@@ -39,14 +44,17 @@ export class AplicacaoComponent implements OnInit {
       result: [null, [Validators.required]],
       help: [null],
       comments: [null],
+      aborted: [null]
     });
   }
 
-  getProtocolo(id: any): void {
-    this.protocolo = this.service.getProtocoloPorId(id).subscribe({
-      next: (response) => this.protocolo = response,
-      error: (err) => console.error(err)
-    });
+  getProtocolo(id: number): void {
+    this.subscription.add(
+      this.service.getProtocoloPorId(id).subscribe({
+        next: (response) => this.protocolo = response,
+        error: (err) => console.error(err)
+      })
+    );
   }
 
   proximaTentativa(): void {
@@ -60,13 +68,23 @@ export class AplicacaoComponent implements OnInit {
   }
 
   abortar(): void {
-    this.router.navigate(['/protocolo'], {
-        queryParams: {
-          cliente: this.idCliente,
-          protocolo: this.protocoloId,
-        },
-      }
-    );
+    if(this.resultados.length === 0) {
+      this.router.navigate(['/protocolo', this.protocoloId]);
+    } else {
+      const successfulAttempts = this.resultados.filter((resultado: any) => resultado.result).length;
+      const por = (successfulAttempts / this.resultados.length) * 100 || 0;
+      const aplicacao = {
+        success: successfulAttempts,
+        failure: this.resultados.length - successfulAttempts,
+        positivePercentage: por,
+        aborted: true,
+        reasonAbortion: this.form.get('aborted')?.value,
+        createdBy: "Usuario Front",
+        protocolId: this.protocoloId,
+        attempts: this.resultados
+      };
+      this.salvarAplicacao(aplicacao);
+    }
   }
 
   finalizar() {
@@ -75,26 +93,24 @@ export class AplicacaoComponent implements OnInit {
     this.resultados.push(ultimaTentativa);
     const successfulAttempts = this.resultados.filter((resultado: any) => resultado.result).length;
     const por = (successfulAttempts / this.resultados.length) * 100 || 0;
-    const application = {
+    const aplicacao = {
       success: successfulAttempts,
-      failure: this.maxiTentativas - successfulAttempts,
+      failure: this.resultados.length - successfulAttempts,
       positivePercentage: por,
       aborted: false,
       reasonAbortion: null,
-      createdBy: "Witer Mendonça",
+      createdBy: "Usuario Front",
 	    protocolId: this.protocoloId,
       attempts: this.resultados
     };
-    this.applicationService.saveApplication(application).subscribe({
+    this.salvarAplicacao(aplicacao);
+  }
+
+  salvarAplicacao(aplicacao: any): void {
+    this.applicationService.saveApplication(aplicacao).subscribe({
       next: (resp) => {
         if(resp.status === 201) {
-          this.router.navigate(['/protocolo'], {
-            queryParams: {
-              cliente: this.idCliente,
-              protocolo: this.protocoloId,
-            },
-          }
-        );
+          this.router.navigate(['/protocolo', this.protocoloId]);
         }
       },
       error: (err) => console.error(err)

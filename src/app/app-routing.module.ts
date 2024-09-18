@@ -1,15 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './modules/home/home/home.component';
-import { CadastroClienteComponent } from './modules/cadastro-cliente/cadastro-cliente/cadastro-cliente.component';
-import { ClienteComponent } from './modules/cliente/cliente/cliente.component';
-import { CadastroResponsavelComponent } from './modules/cadastro-cliente/cadastro-responsavel/cadastro-responsavel.component';
-import { CadastroComponent } from './modules/cadastro-cliente/cadastro/cadastro.component';
-import { EditResponsavelClientComponent } from './modules/cliente/edit-responsavel-client/edit-responsavel-client.component';
-import { InicioClienteComponent } from './modules/cliente/inicio-cliente/inicio-cliente.component';
-import { EditClienteComponent } from './modules/cliente/edit-cliente/edit-cliente.component';
-import { ProtocoloComponent } from './modules/protocolo/protocolo/protocolo.component';
-import { AplicacaoComponent } from './modules/protocolo/aplicacao/aplicacao.component';
 
 const routes: Routes = [
   {
@@ -19,52 +9,23 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent
+    loadComponent: () => import('./modules/home/home.component').then(c => c.HomeComponent),
+    title: 'ABA Instituto Inclusivamente',
   },
   {
-    component: CadastroComponent,
     path: 'cadastro-cliente',
-    children: [
-      {
-        path: '',
-        component: CadastroClienteComponent,
-      },
-      {
-        path: 'cadastro-responsavel',
-        component: CadastroResponsavelComponent,
-      }
-    ]
+    loadChildren: () => import('./modules/cadastro-cliente/cadastro-cliente.module').then(m => m.CadastroClienteModule),
+    title: 'ABA Cadastro de cliente'
   },
   {
     path: 'cliente/:id',
-    component: InicioClienteComponent,
-    children: [
-      {
-        path: '',
-        component: ClienteComponent,
-      },
-      {
-        path: 'editar-responsavel',
-        component: EditResponsavelClientComponent
-      },
-      {
-        path: 'editar-cliente/:id',
-        component: EditClienteComponent,
-      }
-    ]
+    loadChildren: () => import('./modules/cliente/cliente.module').then(m => m.ClienteModule),
+    title: 'ABA Detalhes do cliente'
   },
   {
-    path: 'protocolo',
-    children: [
-      {
-        path: '',
-        component: ProtocoloComponent,
-      },
-      {
-        path: 'aplicacao',
-        component: AplicacaoComponent,
-      }
-    ]
+    path: 'protocolo/:id',
+   loadChildren: () => import('./modules/protocolo/protocolo.module').then(m => m.ProtocoloModule),
+    title: 'ABA Detalhes do protocolo'
   }
 ];
 

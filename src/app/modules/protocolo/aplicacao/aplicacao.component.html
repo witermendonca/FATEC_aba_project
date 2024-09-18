@@ -5,8 +5,7 @@
       mat-fab
       extended
       color="primary"
-      [routerLink]="['../']"
-      [queryParams]="{ cliente: idCliente, protocolo: protocoloId }"
+      [routerLink]="['/protocolo', protocoloId]"
     >
       <mat-icon>arrow_back</mat-icon>
       Voltar
@@ -48,7 +47,7 @@
         </div>
       </div>
       <div class="d-flex justify-content-between mt-4 mb-5">
-        <button mat-fab extended color="warn" class="me-3" (click)="abortar()">Abortar</button>
+        <button mat-fab extended color="warn" class="me-3" data-bs-toggle="modal" data-bs-target="#modalAbortar">Cancelar aplicação</button>
         <button 
           *ngIf="tentativaAtual < maxiTentativas"
           mat-fab 
@@ -65,6 +64,33 @@
           [disabled]="form.invalid" 
           (click)="finalizar()"
         >Encerrar Aplicação</button>
+      </div>
+
+      <div class="modal fade" id="modalAbortar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalAbortarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalAbortarLabel">Informar o motivo do cancelamento</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row m-4">
+                <div class="col-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <input formControlName="aborted" matInput placeholder="motivo do cancelamento">
+                        <mat-error *ngIf="form.get('aborted')?.invalid">
+                            <span>Motivo do cancelamento é obrigatório</span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" mat-fab extended color="primary" class="me-3" data-bs-dismiss="modal">Continuar aplicação</button>
+                <button type="button" mat-fab extended color="warn" data-bs-dismiss="modal" (click)="abortar()">Cancelar aplicação</button>
+            </div>
+            </div>
+        </div>
       </div>
     </form>
   </div>

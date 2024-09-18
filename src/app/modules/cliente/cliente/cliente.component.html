@@ -142,8 +142,7 @@
                     <div class="col-12 d-flex justify-content-between align-items-center">
                         <h5 class="m-0">{{protocolo.name}}</h5>
                         <button mat-raised-button color="primary" 
-                            [routerLink]="['/protocolo']" 
-                            [queryParams]="{cliente: cliente?.id, protocolo: protocolo.id }"
+                            [routerLink]="['/protocolo', protocolo.id]" 
                         >Acessar Protocolo</button> 
                     </div>
                 </div>

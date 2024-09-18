@@ -1,3 +1,5 @@
+import { IApplication } from "./aplicacao.interface";
+
 export interface IProtocol {
   name: string;
   createdBy: string;
@@ -9,16 +11,8 @@ export interface IProtocolResponse {
   name: string;
   createdAt: string;
   createdBy: string;
-  applications?: [];
+  clientId: number;
+  applications?: IApplication[];
 }
 
-export interface IApplication {
-  id: number;
-  positivePercentage: number;
-  success: number;
-  failure: number;
-  createdBy: string;
-  createdAt: string;
-  aborted: boolean;
-  reasonAbortion: string;
-}
+

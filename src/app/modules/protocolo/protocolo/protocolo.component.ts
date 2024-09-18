@@ -3,6 +3,8 @@ import { AplicacaoService } from './../../../shared/services/aplicacao/aplicacao
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProtocoloService } from 'src/app/shared/services';
+import { IProtocol, IProtocolResponse } from 'src/app/shared/interfaces';
+import { IApplication } from 'src/app/shared/interfaces/aplicacao.interface';
 
 @Component({
   selector: 'app-protocolo',
@@ -11,10 +13,10 @@ import { ProtocoloService } from 'src/app/shared/services';
 })
 export class ProtocoloComponent implements OnInit {
 
-  public protocoloId: any;
-  public idCliente: number = 0;
-  public protocolo: any;
-  public aplicacoes: any;
+  public protocoloId?: number;
+  public protocolo?: IProtocolResponse;
+  public aplicacoes?: IApplication[];
+  public aplicacoesSucesso?: IApplication[];
   public displayedColumns: string[] = ['aplicacao', 'dataAplicacao', 'percentual'];
 
   private subscription = new Subscription();
@@ -25,8 +27,7 @@ export class ProtocoloComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.protocoloId = this.route.snapshot.queryParams['protocolo'] || '0';
-    this.idCliente = parseInt(this.route.snapshot.queryParams['cliente'] || '0');
+    this.protocoloId = parseInt(this.route.snapshot.paramMap.get('id') || '0');
     this.getProtocolo(this.protocoloId);
   }
 
@@ -36,6 +37,8 @@ export class ProtocoloComponent implements OnInit {
         next: (protocol) => {
           this.protocolo = protocol;
           this.aplicacoes = protocol.applications;
+          this.aplicacoesSucesso = protocol.applications?.filter((item) => !item.aborted);
+          console.log(this.aplicacoesSucesso);
         }
       })
     );

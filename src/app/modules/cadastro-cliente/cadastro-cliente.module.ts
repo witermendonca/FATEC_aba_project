@@ -5,6 +5,7 @@ import { CadastroResponsavelComponent } from './cadastro-responsavel/cadastro-re
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { FormResponsavelComponent } from 'src/app/shared/components/form-responsavel/form-responsavel.component';
 import { ExpansionPanelResponsavelComponent } from 'src/app/shared/components/expansion-panel-responsavel/expansion-panel-responsavel.component';
+import { CadastroClienteRoutingModule } from './cadastro-cliente-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { ExpansionPanelResponsavelComponent } from 'src/app/shared/components/ex
     ExpansionPanelResponsavelComponent,
   ],
   exports: [
-    CadastroClienteComponent,
+    CadastroClienteRoutingModule
   ]
 })
 export class CadastroClienteModule { }

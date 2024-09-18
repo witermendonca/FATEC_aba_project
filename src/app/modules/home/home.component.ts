@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, map} from 'rxjs';
 import { ICliente } from 'src/app/shared/interfaces';
 import { ClienteService } from 'src/app/shared/services';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class HomeComponent implements OnInit {
   listaCliente: ICliente[] = [];
   listaClienteAux: ICliente[] = [];
   campoBusca = new FormControl();
 
-  constructor(private clienteService: ClienteService) {}
+  constructor(private clienteService: ClienteService,) {}
 
   ngOnInit(): void {
     this.clienteService.getAllClients().subscribe({
