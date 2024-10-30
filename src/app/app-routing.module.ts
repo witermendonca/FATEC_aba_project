@@ -15,7 +15,9 @@ const routes: Routes = [
   {
     path: 'cadastro-cliente',
     loadChildren: () => import('./modules/cadastro-cliente/cadastro-cliente.module').then(m => m.CadastroClienteModule),
-    title: 'ABA Cadastro de cliente'
+    title: 'ABA Cadastro de cliente',
+    data: {preload:false}
+  
   },
   {
     path: 'cliente/:id',

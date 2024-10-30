@@ -6,8 +6,6 @@ import { Logger } from './logger.interface';
 })
 export class LoggerService implements Logger {
 
-  constructor() { }
-
   info(message: string): void {
     console.info(message);
   }

@@ -8,7 +8,7 @@ describe('ExpansionPanelResponsavelComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ExpansionPanelResponsavelComponent]
+      imports: [ExpansionPanelResponsavelComponent]
     });
     fixture = TestBed.createComponent(ExpansionPanelResponsavelComponent);
     component = fixture.componentInstance;

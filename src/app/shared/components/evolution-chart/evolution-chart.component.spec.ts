@@ -8,7 +8,7 @@ describe('EvolutionChartComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [EvolutionChartComponent]
+      imports: [EvolutionChartComponent]
     });
     fixture = TestBed.createComponent(EvolutionChartComponent);
     component = fixture.componentInstance;
