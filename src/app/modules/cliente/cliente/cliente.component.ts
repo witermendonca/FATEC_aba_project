@@ -6,7 +6,6 @@ import { ICliente, IProtocolResponse, IResponsavel } from 'src/app/shared/interf
 import { ClienteService, ProtocoloService } from 'src/app/shared/services';
 import { Logger } from 'src/app/shared/services/logger/logger.interface';
 import { LoggerService } from 'src/app/shared/services/logger/logger.service';
-import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-cliente',
