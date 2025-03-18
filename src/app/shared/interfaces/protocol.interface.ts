@@ -1,4 +1,4 @@
-import { IApplication } from "./aplicacao.interface";
+import { IApplication } from './aplicacao.interface';
 
 export interface IProtocol {
   name: string;
@@ -14,5 +14,3 @@ export interface IProtocolResponse {
   clientId: number;
   applications?: IApplication[];
 }
-
-

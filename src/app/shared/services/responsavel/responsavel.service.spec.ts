@@ -1,25 +1,27 @@
-import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
 
-import { ResponsavelService } from './responsavel.service';
 import { environment } from 'src/environments/environment';
 import { IResponsavel } from '../../interfaces';
+import { ResponsavelService } from './responsavel.service';
 
 const mockResponsaveis: IResponsavel[] = [
   {
-    id: 1, name: 'John Doe',
+    id: 1,
+    name: 'John Doe',
     cpf: '00000000000',
     email: 'test@gmail.com',
     degreeOfKinship: 'father',
-    telephone: '9999999999'
+    telephone: '9999999999',
   },
   {
-    id: 2, name: 'Jane Doe',
+    id: 2,
+    name: 'Jane Doe',
     cpf: '00000000000',
     email: 'test@gmail.com',
     degreeOfKinship: 'mother',
-    telephone: '9999999999'
-  }
+    telephone: '9999999999',
+  },
 ];
 
 describe('ResponsavelService', () => {
@@ -30,7 +32,7 @@ describe('ResponsavelService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [ResponsavelService]
+      providers: [ResponsavelService],
     });
     service = TestBed.inject(ResponsavelService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -47,7 +49,7 @@ describe('ResponsavelService', () => {
   it('should save a responsible', () => {
     const mockResponsavel: IResponsavel = mockResponsaveis[0];
 
-    service.saveResponsible(mockResponsavel).subscribe((response) => {
+    service.saveResponsible(mockResponsavel).subscribe(response => {
       expect(response).toEqual(mockResponsavel);
     });
 
@@ -57,8 +59,7 @@ describe('ResponsavelService', () => {
   });
 
   it('should get responsibles by client ID', () => {
-  
-    service.getResponsibleByClient(1).subscribe((response) => {
+    service.getResponsibleByClient(1).subscribe(response => {
       expect(response).toEqual(mockResponsaveis);
     });
 
@@ -70,7 +71,7 @@ describe('ResponsavelService', () => {
   it('should get a responsible by ID', () => {
     const mockResponsavel: IResponsavel = mockResponsaveis[1];
 
-    service.getResponsibleByid(1).subscribe((response) => {
+    service.getResponsibleByid(1).subscribe(response => {
       expect(response).toEqual(mockResponsavel);
     });
 
@@ -82,7 +83,7 @@ describe('ResponsavelService', () => {
   it('should update a responsible', () => {
     const mockResponsavel: IResponsavel = mockResponsaveis[0];
 
-    service.updateResponsavel(mockResponsavel, 1).subscribe((response) => {
+    service.updateResponsavel(mockResponsavel, 1).subscribe(response => {
       expect(response).toEqual(mockResponsavel);
     });
 
@@ -92,7 +93,7 @@ describe('ResponsavelService', () => {
   });
 
   it('should delete a responsible', () => {
-    service.deleteResponsavel(1).subscribe((response) => {
+    service.deleteResponsavel(1).subscribe(response => {
       expect(response).toBeNull();
     });
 

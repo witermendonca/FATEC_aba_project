@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ICliente } from 'src/app/shared/interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataClienteService {
   private _cliente = new BehaviorSubject<ICliente | null>(null);

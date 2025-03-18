@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormResponsavelComponent } from './form-responsavel.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FormResponsavelComponent } from './form-responsavel.component';
 
 describe('FormResponsavelComponent', () => {
   let component: FormResponsavelComponent;
@@ -10,12 +10,7 @@ describe('FormResponsavelComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        FormResponsavelComponent,
-        NoopAnimationsModule,
-        ReactiveFormsModule,
-        FormsModule,
-      ]
+      imports: [FormResponsavelComponent, NoopAnimationsModule, ReactiveFormsModule, FormsModule],
     });
     fixture = TestBed.createComponent(FormResponsavelComponent);
     component = fixture.componentInstance;

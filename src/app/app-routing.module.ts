@@ -14,25 +14,27 @@ const routes: Routes = [
   },
   {
     path: 'cadastro-cliente',
-    loadChildren: () => import('./modules/cadastro-cliente/cadastro-cliente.module').then(m => m.CadastroClienteModule),
+    loadChildren: () =>
+      import('./modules/cadastro-cliente/cadastro-cliente.module').then(
+        m => m.CadastroClienteModule,
+      ),
     title: 'ABA Cadastro de cliente',
-    data: {preload:false}
-  
+    data: { preload: false },
   },
   {
     path: 'cliente/:id',
     loadChildren: () => import('./modules/cliente/cliente.module').then(m => m.ClienteModule),
-    title: 'ABA Detalhes do cliente'
+    title: 'ABA Detalhes do cliente',
   },
   {
     path: 'protocolo/:id',
-   loadChildren: () => import('./modules/protocolo/protocolo.module').then(m => m.ProtocoloModule),
-    title: 'ABA Detalhes do protocolo'
-  }
+    loadChildren: () => import('./modules/protocolo/protocolo.module').then(m => m.ProtocoloModule),
+    title: 'ABA Detalhes do protocolo',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

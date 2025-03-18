@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClienteComponent } from './cliente/cliente.component';
-import { EditResponsavelClientComponent } from './edit-responsavel-client/edit-responsavel-client.component';
 import { EditClienteComponent } from './edit-cliente/edit-cliente.component';
+import { EditResponsavelClientComponent } from './edit-responsavel-client/edit-responsavel-client.component';
 
 const routes: Routes = [
   {

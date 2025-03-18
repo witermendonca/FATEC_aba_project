@@ -1,10 +1,10 @@
-import { Subscription } from 'rxjs';
-import { AplicacaoService } from './../../../shared/services/aplicacao/aplicacao.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { IProtocolResponse } from 'src/app/shared/interfaces';
 import { ProtocoloService } from 'src/app/shared/services';
+import { AplicacaoService } from './../../../shared/services/aplicacao/aplicacao.service';
 
 @Component({
   selector: 'app-aplicacao',
@@ -12,7 +12,7 @@ import { ProtocoloService } from 'src/app/shared/services';
   styleUrls: ['./aplicacao.component.scss'],
 })
 export class AplicacaoComponent implements OnInit, OnDestroy {
-  public protocoloId: any;
+  public protocoloId: number = 0;
   public protocolo?: IProtocolResponse;
   public tentativaAtual: number = 1;
   public maxiTentativas: number = 10;
@@ -28,10 +28,10 @@ export class AplicacaoComponent implements OnInit, OnDestroy {
     private router: Router,
     private applicationService: AplicacaoService,
   ) {}
- 
+
   ngOnInit(): void {
     this.createForm();
-    this.protocoloId = this.route.snapshot.queryParams['protocolo'] || '0';
+    this.protocoloId = parseInt(this.route.snapshot.queryParams['protocolo'] || '0');
     this.getProtocolo(this.protocoloId);
   }
 
@@ -44,16 +44,16 @@ export class AplicacaoComponent implements OnInit, OnDestroy {
       result: [null, [Validators.required]],
       help: [null],
       comments: [null],
-      aborted: [null]
+      aborted: [null],
     });
   }
 
   getProtocolo(id: number): void {
     this.subscription.add(
       this.service.getProtocoloPorId(id).subscribe({
-        next: (response) => this.protocolo = response,
-        error: (err) => console.error(err)
-      })
+        next: response => (this.protocolo = response),
+        error: err => console.error(err),
+      }),
     );
   }
 
@@ -68,10 +68,12 @@ export class AplicacaoComponent implements OnInit, OnDestroy {
   }
 
   abortar(): void {
-    if(this.resultados.length === 0) {
+    if (this.resultados.length === 0) {
       this.router.navigate(['/protocolo', this.protocoloId]);
     } else {
-      const successfulAttempts = this.resultados.filter((resultado: any) => resultado.result).length;
+      const successfulAttempts = this.resultados.filter(
+        (resultado: any) => resultado.result,
+      ).length;
       const por = (successfulAttempts / this.resultados.length) * 100 || 0;
       const aplicacao = {
         success: successfulAttempts,
@@ -79,9 +81,9 @@ export class AplicacaoComponent implements OnInit, OnDestroy {
         positivePercentage: por,
         aborted: true,
         reasonAbortion: this.form.get('aborted')?.value,
-        createdBy: "Usuario Front",
+        createdBy: 'Usuario Front',
         protocolId: this.protocoloId,
-        attempts: this.resultados
+        attempts: this.resultados,
       };
       this.salvarAplicacao(aplicacao);
     }
@@ -99,21 +101,21 @@ export class AplicacaoComponent implements OnInit, OnDestroy {
       positivePercentage: por,
       aborted: false,
       reasonAbortion: null,
-      createdBy: "Usuario Front",
-	    protocolId: this.protocoloId,
-      attempts: this.resultados
+      createdBy: 'Usuario Front',
+      protocolId: this.protocoloId,
+      attempts: this.resultados,
     };
     this.salvarAplicacao(aplicacao);
   }
 
   salvarAplicacao(aplicacao: any): void {
     this.applicationService.saveApplication(aplicacao).subscribe({
-      next: (resp) => {
-        if(resp.status === 201) {
+      next: resp => {
+        if (resp.status === 201) {
           this.router.navigate(['/protocolo', this.protocoloId]);
         }
       },
-      error: (err) => console.error(err)
+      error: err => console.error(err),
     });
   }
 }

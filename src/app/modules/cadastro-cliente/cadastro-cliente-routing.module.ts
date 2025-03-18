@@ -1,8 +1,8 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { CadastroComponent } from "./cadastro/cadastro.component";
-import { CadastroClienteComponent } from "./cadastro-cliente/cadastro-cliente.component";
-import { CadastroResponsavelComponent } from "./cadastro-responsavel/cadastro-responsavel.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { CadastroClienteComponent } from './cadastro-cliente/cadastro-cliente.component';
+import { CadastroResponsavelComponent } from './cadastro-responsavel/cadastro-responsavel.component';
+import { CadastroComponent } from './cadastro/cadastro.component';
 
 const routes: Routes = [
   {
@@ -16,12 +16,12 @@ const routes: Routes = [
       {
         path: 'cadastro-responsavel',
         component: CadastroResponsavelComponent,
-      }
-    ]
-  }
+      },
+    ],
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class CadastroClienteRoutingModule { }
+export class CadastroClienteRoutingModule {}

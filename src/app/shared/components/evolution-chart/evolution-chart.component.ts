@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartType } from 'chart.js';
+import { NgChartsModule } from 'ng2-charts';
 
 @Component({
   selector: 'app-evolution-chart',
   templateUrl: './evolution-chart.component.html',
   styleUrls: ['./evolution-chart.component.scss'],
   standalone: true,
-  imports: [CommonModule, NgChartsModule]
+  imports: [CommonModule, NgChartsModule],
 })
 export class EvolutionChartComponent implements OnInit {
   @Input() applications: any[] = [];
@@ -21,9 +21,9 @@ export class EvolutionChartComponent implements OnInit {
         borderColor: 'rgba(75,192,192,1)',
         backgroundColor: 'rgba(75,192,192,0.2)',
         fill: 'origin',
-      }
+      },
     ],
-    labels: []
+    labels: [],
   };
 
   public lineChartOptions: ChartConfiguration['options'] = {
@@ -32,16 +32,16 @@ export class EvolutionChartComponent implements OnInit {
       x: {
         title: {
           display: true,
-          text: 'Data e hora da aplicação'
-        }
+          text: 'Data e hora da aplicação',
+        },
       },
       y: {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Percentual de sucesso (%)'
-        }
-      }
+          text: 'Percentual de sucesso (%)',
+        },
+      },
     },
     plugins: {
       colors: {},
@@ -49,27 +49,26 @@ export class EvolutionChartComponent implements OnInit {
         display: true,
         position: 'top',
       },
-    }
+    },
   };
-  
 
   public lineChartType: ChartType = 'line';
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.setChartData();
   }
 
   setChartData() {
-    const sortedApplications = this.applications.sort((a, b) =>
-      new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    const sortedApplications = this.applications.sort(
+      (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
     );
-    
+
     this.lineChartData.labels = sortedApplications.map(app =>
-      new Date(app.createdAt).toLocaleString()
+      new Date(app.createdAt).toLocaleString(),
     );
-    
+
     this.lineChartData.datasets[0].data = sortedApplications.map(app => app.positivePercentage);
   }
 }

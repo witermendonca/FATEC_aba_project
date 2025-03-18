@@ -1,41 +1,47 @@
 <mat-accordion>
-    <mat-expansion-panel class="border-top rounded-2 mb-2" *ngFor="let responsavel of _responsaveis, let i = index">
-        <mat-expansion-panel-header class="p-4 h-100">
-            <mat-panel-title>
-                <h5 class="m-0">{{responsavel.name}}</h5>
-            </mat-panel-title>
-        </mat-expansion-panel-header> 
-        <div class="row">
-            <div class="col-6">
-                <h6 class="me-1">Nome:</h6>
-                <p>{{responsavel.name}}</p>
-            </div>
-            <div class="col-6">
-                <h6 class="me-1">Email:</h6>
-                <p>{{responsavel.email}}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <h6 class="me-1">CPF:</h6>
-                <p>{{responsavel.cpf}}</p>
-            </div>
-            <div class="col-6">
-                <h6 class="me-1">Telefone:</h6>
-                <p>{{responsavel.telephone}}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <h6 class="me-1">Grau de parentesco:</h6>
-                <p>{{responsavel.degreeOfKinship}}</p>
-            </div>
-        </div>
-        <div class="row mt-2 mb-3">
-            <div class="col-12 d-flex justify-content-between">
-                <button class="p-4 me-2" mat-raised-button color="primary" (click)="acessarResponsavel(i)">Acessar responsável</button>
-                <button class="p-4" mat-raised-button color="warn" (click)="removeResponsavel(i)">Remover responsável</button>
-            </div>
-        </div>
-    </mat-expansion-panel>
+  <mat-expansion-panel
+    class="border-top rounded-2 mb-2"
+    *ngFor="let responsavel of _responsaveis; let i = index">
+    <mat-expansion-panel-header class="p-4 h-100">
+      <mat-panel-title>
+        <h5 class="m-0">{{ responsavel.name }}</h5>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <div class="col-6">
+        <h6 class="me-1">Nome:</h6>
+        <p>{{ responsavel.name }}</p>
+      </div>
+      <div class="col-6">
+        <h6 class="me-1">Email:</h6>
+        <p>{{ responsavel.email }}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <h6 class="me-1">CPF:</h6>
+        <p>{{ responsavel.cpf }}</p>
+      </div>
+      <div class="col-6">
+        <h6 class="me-1">Telefone:</h6>
+        <p>{{ responsavel.telephone }}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <h6 class="me-1">Grau de parentesco:</h6>
+        <p>{{ responsavel.degreeOfKinship }}</p>
+      </div>
+    </div>
+    <div class="row mt-2 mb-3">
+      <div class="col-12 d-flex justify-content-between">
+        <button class="p-4 me-2" mat-raised-button color="primary" (click)="acessarResponsavel(i)">
+          Acessar responsável
+        </button>
+        <button class="p-4" mat-raised-button color="warn" (click)="removeResponsavel(i)">
+          Remover responsável
+        </button>
+      </div>
+    </div>
+  </mat-expansion-panel>
 </mat-accordion>

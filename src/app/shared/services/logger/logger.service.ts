@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { Logger } from './logger.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoggerService implements Logger {
-
   info(message: string): void {
     console.info(message);
   }

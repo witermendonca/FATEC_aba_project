@@ -1,12 +1,11 @@
-import { SharedModule } from 'src/app/shared/shared.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SharedModule } from 'src/app/shared/shared.module';
 
-import { ClienteComponent } from './cliente.component';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MaterialModule } from 'src/app/shared/material.module';
-import { ClienteService, ProtocoloService } from 'src/app/shared/services';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ClienteService, ProtocoloService } from 'src/app/shared/services';
+import { ClienteComponent } from './cliente.component';
 
 describe('ClienteComponent', () => {
   let component: ClienteComponent;
@@ -15,16 +14,8 @@ describe('ClienteComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ClienteComponent],
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        SharedModule,
-        NoopAnimationsModule,
-      ],
-      providers: [
-        ProtocoloService,
-        ClienteService,
-      ]
+      imports: [RouterTestingModule, HttpClientTestingModule, SharedModule, NoopAnimationsModule],
+      providers: [ProtocoloService, ClienteService],
     });
     fixture = TestBed.createComponent(ClienteComponent);
     component = fixture.componentInstance;

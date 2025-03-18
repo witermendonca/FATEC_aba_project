@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ProtocoloService } from './protocolo.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ProtocoloService } from './protocolo.service';
 
 describe('ProtocoloService', () => {
   let service: ProtocoloService;

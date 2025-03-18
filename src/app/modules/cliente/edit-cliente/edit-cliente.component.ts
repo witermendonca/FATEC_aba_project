@@ -29,7 +29,7 @@ export class EditClienteComponent implements OnInit {
 
   createForm(): void {
     this.form = this.formBuilder.group({
-      name: [ this.cliente?.name || '', [Validators.required] ],
+      name: [this.cliente?.name || '', [Validators.required]],
       email: [this.cliente?.email || '', [Validators.required, Validators.email]],
       birthday: [this.cliente?.birthday || '', [Validators.required]],
       gender: [this.cliente?.gender || '', [Validators.required]],
@@ -53,23 +53,23 @@ export class EditClienteComponent implements OnInit {
 
   getClient(id: number): void {
     this.clienteService.getClientById(id).subscribe({
-      next: (response) => {
+      next: response => {
         this.cliente = response;
         this.createForm();
       },
-      error: (err) => console.error(err)
-    })
+      error: err => console.error(err),
+    });
   }
 
   onEdit() {
     const cliente = this.form.getRawValue() as ICliente;
     this.clienteService.updateClient(cliente, this.cliente?.id || 0).subscribe({
-      next: (response) => {
-        if(response) {
+      next: response => {
+        if (response) {
           this.router.navigate(['/cliente', response.id]);
         }
       },
-      error: (err) => console.error(err)
-    })
+      error: err => console.error(err),
+    });
   }
 }

@@ -1,7 +1,4 @@
-export interface IApplicationRequest {
-
-}
-
+export interface IApplicationRequest {}
 
 export interface IApplication {
   id: number;

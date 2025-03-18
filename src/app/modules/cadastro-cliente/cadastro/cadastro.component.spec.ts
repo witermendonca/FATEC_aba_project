@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CadastroComponent } from './cadastro.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CadastroComponent } from './cadastro.component';
 
 describe('CadastroComponent', () => {
   let component: CadastroComponent;
@@ -10,10 +10,7 @@ describe('CadastroComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [CadastroComponent],
-      imports: [
-        RouterTestingModule,
-      ],
-     
+      imports: [RouterTestingModule],
     });
     fixture = TestBed.createComponent(CadastroComponent);
     component = fixture.componentInstance;

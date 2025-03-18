@@ -1,12 +1,12 @@
-import { ProtocoloService } from './../../../shared/services/protocolo/protocolo.service';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ResponsavelService } from './../../../shared/services/responsavel/responsavel.service';
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ICliente, IProtocolResponse, IResponsavel } from 'src/app/shared/interfaces';
-import { ClienteService } from 'src/app/shared/services';
-import { v4 as uuidv4 } from 'uuid';
 import { Subscription } from 'rxjs';
+import { ICliente, IProtocolResponse, IResponsavel } from 'src/app/shared/interfaces';
+import { ClienteService, ProtocoloService } from 'src/app/shared/services';
+import { Logger } from 'src/app/shared/services/logger/logger.interface';
+import { LoggerService } from 'src/app/shared/services/logger/logger.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-cliente',
@@ -27,8 +27,9 @@ export class ClienteComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private protocoloService: ProtocoloService,
+    @Inject(LoggerService) private logger: Logger,
   ) {}
-  
+
   ngOnInit(): void {
     this.idClient = parseInt(this.route.snapshot.paramMap.get('id') || '0');
     this.getClient(this.idClient);
@@ -38,69 +39,66 @@ export class ClienteComponent implements OnInit {
   getClient(id: number): void {
     this.subscription.add(
       this.clienteService.getClientById(id).subscribe({
-        next: (response) => {
+        next: response => {
           this.cliente = response;
           this.protocolos = response.protocols || [];
         },
-        error: (err) => console.error(err)
-      })
+        error: err => {
+          this.logger.error(err);
+          this.router.navigate(['/home']);
+        },
+      }),
     );
   }
 
   acessarResponsavel(event?: IResponsavel): void {
-    this.router.navigate(
-      [`/cliente/${this.idClient}/editar-responsavel`],
-      {
-        queryParams: {
-          cliente: this.idClient,
-          responsavel: event?.id || 0,
-        }
-      }
-    )
+    this.router.navigate([`/cliente/${this.idClient}/editar-responsavel`], {
+      queryParams: {
+        cliente: this.idClient,
+        responsavel: event?.id || 0,
+      },
+    });
   }
 
   acessarProtocolo(event?: IResponsavel): void {
-    this.router.navigate(
-      [`/cliente/${this.idClient}/editar-responsavel`],
-      {
-        queryParams: {
-          cliente: this.idClient,
-          responsavel: event?.id || 0,
-        }
-      }
-    )
+    this.router.navigate([`/cliente/${this.idClient}/editar-responsavel`], {
+      queryParams: {
+        cliente: this.idClient,
+        responsavel: event?.id || 0,
+      },
+    });
   }
 
   createForm(): void {
     this.formProtocolo = this.formBuilder.group({
-      name: [null, [Validators.required]]
-    })
+      name: [null, [Validators.required]],
+    });
   }
 
   getProtocolos(): void {
     this.subscription.add(
       this.protocoloService.listProtocolosByClient(this.idClient).subscribe({
-        next: (resp) => {
+        next: resp => {
           this.protocolos = resp;
-        }
-      })
+        },
+      }),
     );
   }
 
   onCadastrar(): void {
-    if(this.formProtocolo.invalid) return;
+    if (this.formProtocolo.invalid) return;
     const protocol = this.formProtocolo.getRawValue();
-    protocol.createdBy = 'Witer Xavier Mendonca'
+    protocol.createdBy = 'Witer Xavier Mendonca';
     protocol.idClient = this.idClient;
     this.subscription.add(
       this.protocoloService.saveProtocolo(protocol).subscribe({
-        next: (resp) => {
-          if(resp.status === 201) {
+        next: resp => {
+          if (resp.status === 201) {
             this.getProtocolos();
           }
         },
-        error: (err) => console.error(err)
-      })
+        error: err => console.error(err),
+      }),
     );
   }
 

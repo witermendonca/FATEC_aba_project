@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SharedModule } from '../../shared.module';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IResponsavel } from '../../interfaces';
+import { SharedModule } from '../../shared.module';
 
 @Component({
   selector: 'app-form-responsavel',
   templateUrl: './form-responsavel.component.html',
   styleUrls: ['./form-responsavel.component.scss'],
   standalone: true,
-  imports: [SharedModule]
+  imports: [SharedModule],
 })
 export class FormResponsavelComponent implements OnInit {
   public form!: FormGroup;
@@ -49,26 +49,11 @@ export class FormResponsavelComponent implements OnInit {
 
   public createForm(): void {
     this.form = this.formBuilder.group({
-      name: [
-        this._responsavel?.name || null,
-        [Validators.required],
-      ],
-      cpf: [
-        this._responsavel?.cpf || null,
-        [Validators.required],
-      ],
-      email: [
-        this._responsavel?.email || null,
-        [Validators.required, Validators.email],
-      ],
-      degreeOfKinship: [
-        this._responsavel?.degreeOfKinship || null,
-        [Validators.required],
-      ],
-      telephone: [
-        this._responsavel?.telephone || null,
-        [Validators.required],
-      ],
+      name: [this._responsavel?.name || null, [Validators.required]],
+      cpf: [this._responsavel?.cpf || null, [Validators.required]],
+      email: [this._responsavel?.email || null, [Validators.required, Validators.email]],
+      degreeOfKinship: [this._responsavel?.degreeOfKinship || null, [Validators.required]],
+      telephone: [this._responsavel?.telephone || null, [Validators.required]],
     });
   }
 }

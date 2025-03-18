@@ -16,7 +16,7 @@ export interface ICliente {
   address: Address;
   responsible?: IResponsavel[];
   createdAt?: string;
-  updatedAt?: string
+  updatedAt?: string;
   createdBy?: string;
   updatedBy?: string;
   protocols?: IProtocolResponse[];

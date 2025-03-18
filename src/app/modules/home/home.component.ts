@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, map} from 'rxjs';
+import { debounceTime, map } from 'rxjs';
 import { ICliente } from 'src/app/shared/interfaces';
 import { ClienteService } from 'src/app/shared/services';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -10,31 +10,31 @@ import { SharedModule } from 'src/app/shared/shared.module';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
-  imports: [SharedModule]
+  imports: [SharedModule],
 })
 export class HomeComponent implements OnInit {
   listaCliente: ICliente[] = [];
   listaClienteAux: ICliente[] = [];
   campoBusca = new FormControl();
 
-  constructor(private clienteService: ClienteService,) {}
+  constructor(private clienteService: ClienteService) {}
 
   ngOnInit(): void {
     this.clienteService.getAllClients().subscribe({
-      next: (response) => {
+      next: response => {
         this.listaCliente = response;
         this.listaClienteAux = response;
       },
-      error: (err) => console.error(err),
+      error: err => console.error(err),
     });
   }
 
   clientesEncontrados$ = this.campoBusca.valueChanges.pipe(
     debounceTime(300),
-    map((res) => {
-      this.listaCliente = this.listaClienteAux.filter((cliente) =>
-        cliente.name.toLowerCase().includes(res.toLowerCase())
+    map(res => {
+      this.listaCliente = this.listaClienteAux.filter(cliente =>
+        cliente.name.toLowerCase().includes(res.toLowerCase()),
       );
-    })
+    }),
   );
 }

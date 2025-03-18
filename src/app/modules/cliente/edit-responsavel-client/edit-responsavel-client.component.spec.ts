@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditResponsavelClientComponent } from './edit-responsavel-client.component';
-import { ResponsavelService } from 'src/app/shared/services';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MaterialModule } from 'src/app/shared/material.module';
-import { FormResponsavelComponent } from 'src/app/shared/components/form-responsavel/form-responsavel.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormResponsavelComponent } from 'src/app/shared/components/form-responsavel/form-responsavel.component';
+import { MaterialModule } from 'src/app/shared/material.module';
+import { ResponsavelService } from 'src/app/shared/services';
+import { EditResponsavelClientComponent } from './edit-responsavel-client.component';
 
 describe('EditResponsavelClientComponent', () => {
   let component: EditResponsavelClientComponent;
@@ -22,9 +22,7 @@ describe('EditResponsavelClientComponent', () => {
         FormResponsavelComponent,
         NoopAnimationsModule,
       ],
-      providers: [
-        ResponsavelService,
-      ]
+      providers: [ResponsavelService],
     });
     fixture = TestBed.createComponent(EditResponsavelClientComponent);
     component = fixture.componentInstance;

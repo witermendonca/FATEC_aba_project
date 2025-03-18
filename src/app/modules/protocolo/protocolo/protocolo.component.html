@@ -1,12 +1,7 @@
 <div class="cliente mb-5">
   <h1 class="text-center mt-4">Protocolo {{ protocolo?.name }}</h1>
   <div class="mt-5 mb-5 d-flex justify-content-between align-items-center">
-    <button
-      mat-fab
-      extended
-      color="primary"
-      [routerLink]="['/cliente', protocolo?.clientId]"
-    >
+    <button mat-fab extended color="primary" [routerLink]="['/cliente', protocolo?.clientId]">
       <mat-icon>arrow_back</mat-icon>
       Voltar
     </button>
@@ -15,8 +10,7 @@
       extended
       color="primary"
       [routerLink]="['./aplicacao']"
-      [queryParams]="{ protocolo: protocolo?.id }"
-    >
+      [queryParams]="{ protocolo: protocolo?.id }">
       Aplicar protocolo
     </button>
   </div>
@@ -27,13 +21,17 @@
   <h2>Aplicações do protocolos</h2>
   <div *ngIf="aplicacoes && aplicacoes.length > 0">
     <mat-accordion>
-      <mat-expansion-panel class="mt-2 mb-2 rounded-2" *ngFor="let item of aplicacoes; let i = index">
+      <mat-expansion-panel
+        class="mt-2 mb-2 rounded-2"
+        *ngFor="let item of aplicacoes; let i = index">
         <mat-expansion-panel-header class="p-4 h-100">
           <mat-panel-title>
             <div class="status">
-              <div class="status__circle" [ngClass]="item.aborted ? 'bg-danger': 'bg-success'"></div>
+              <div
+                class="status__circle"
+                [ngClass]="item.aborted ? 'bg-danger' : 'bg-success'"></div>
             </div>
-            <h5 class="m-0">{{i+1}}° Aplicação</h5>
+            <h5 class="m-0">{{ i + 1 }}° Aplicação</h5>
           </mat-panel-title>
           <mat-panel-description>
             <h6 class="text-danger" *ngIf="item.aborted">Essa aplicação foi abortada</h6>
@@ -41,39 +39,40 @@
         </mat-expansion-panel-header>
         <div class="row mt-2 mb-3">
           <div class="col-6">
-            <h6>Tentativas com sucesso:</h6> 
-            <p>{{item.success}}</p>
+            <h6>Tentativas com sucesso:</h6>
+            <p>{{ item.success }}</p>
           </div>
           <div class="col-6">
-            <h6>Tentativas com insucesso:</h6> 
-            <p>{{item.failure}}</p>
+            <h6>Tentativas com insucesso:</h6>
+            <p>{{ item.failure }}</p>
           </div>
         </div>
         <div class="row mt-2 mb-3">
           <div class="col-12">
             <h6>Percentual de sucesso:</h6>
-            <p>{{item.positivePercentage | number}}%</p>
+            <p>{{ item.positivePercentage | number }}%</p>
           </div>
         </div>
         <div class="row mt-2 mb-3">
           <div class="col-6">
-            <h6>Criado por:</h6> 
-            <p>{{item.createdBy}}</p>
+            <h6>Criado por:</h6>
+            <p>{{ item.createdBy }}</p>
           </div>
           <div class="col-6">
-            <h6>Data da aplicação:</h6> 
-            <p>{{item.createdAt+'Z' | date : 'dd/MM/yyyy HH:mm'}}</p>
+            <h6>Data da aplicação:</h6>
+            <p>{{ item.createdAt + 'Z' | date: 'dd/MM/yyyy HH:mm' }}</p>
           </div>
           <div class="row mt-2 mb-3" *ngIf="item.reasonAbortion">
             <div class="col-12">
-              <h6 class="text-danger">Motivo pelo qual foi abortada a aplicação:</h6> 
-              <p class="text-danger">{{item.reasonAbortion}}</p>
+              <h6 class="text-danger">Motivo pelo qual foi abortada a aplicação:</h6>
+              <p class="text-danger">{{ item.reasonAbortion }}</p>
             </div>
           </div>
         </div>
       </mat-expansion-panel>
-    </mat-accordion>     
+    </mat-accordion>
   </div>
-  <p *ngIf="aplicacoes && aplicacoes.length <= 0">Não foi realizada nenhuma aplicação do protocolo {{ protocolo?.name }}</p>
+  <p *ngIf="aplicacoes && aplicacoes.length <= 0">
+    Não foi realizada nenhuma aplicação do protocolo {{ protocolo?.name }}
+  </p>
 </div>
-

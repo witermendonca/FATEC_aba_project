@@ -1,14 +1,13 @@
 <h1 class="text-center mt-4">Responsável</h1>
 <div class="mt-4">
-    <button mat-fab extended color="primary" [routerLink]="['../']">
-        <mat-icon>arrow_back</mat-icon>
-        Voltar
-    </button>
-    <app-form-responsavel 
-        [responsavel]="responsavel"
-        [textButton]="textButton"
-        [exibeExcluir]="true"
-        (responsavelEvent)="EditResponsavel($event)"
-        (excluirEvent)="excluirResponsavel($event)"
-    ></app-form-responsavel>
+  <button mat-fab extended color="primary" [routerLink]="['../']">
+    <mat-icon>arrow_back</mat-icon>
+    Voltar
+  </button>
+  <app-form-responsavel
+    [responsavel]="responsavel"
+    [textButton]="textButton"
+    [exibeExcluir]="true"
+    (responsavelEvent)="EditResponsavel($event)"
+    (excluirEvent)="excluirResponsavel($event)"></app-form-responsavel>
 </div>

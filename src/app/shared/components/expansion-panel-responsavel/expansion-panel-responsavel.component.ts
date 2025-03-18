@@ -8,7 +8,7 @@ import { SharedModule } from '../../shared.module';
   styleUrls: ['./expansion-panel-responsavel.component.scss'],
   standalone: true,
   imports: [SharedModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ExpansionPanelResponsavelComponent {
   public _responsaveis: IResponsavel[] | undefined = [];
@@ -21,14 +21,14 @@ export class ExpansionPanelResponsavelComponent {
   @Output() removerEvent = new EventEmitter<IResponsavel>();
 
   acessarResponsavel(index: number): void {
-    if(this._responsaveis){
+    if (this._responsaveis) {
       this.acessarEvent.emit(this._responsaveis[index]);
     }
   }
 
   removeResponsavel(index: number): void {
-    if(this._responsaveis){
-      this.removerEvent.emit(this._responsaveis[index])
+    if (this._responsaveis) {
+      this.removerEvent.emit(this._responsaveis[index]);
     }
   }
 }
